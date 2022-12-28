@@ -1,4 +1,4 @@
-abstract class Department {
+class Department {
   /* class field */
   // protected: private와 비슷하지만 이 클래스 뿐만 아니라
   // 확장하는 모든 클래스에서도 사용 가능한 속성으로 만들어준다.
