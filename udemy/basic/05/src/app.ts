@@ -1,11 +1,13 @@
 class Department {
-  // Class Field
-  private employees: string[] = []; // private: 객체 밖에서 필드에 접근할 수 없다.
+  /* class field */
+  // protected: private와 비슷하지만 이 클래스 뿐만 아니라
+  // 확장하는 모든 클래스에서도 사용 가능한 속성으로 만들어준다.
+  protected employees: string[] = [];
 
   // 클래스 필드를 축약해서 생성할 수 있다.
   constructor(private readonly id: string, public name: string) {}
 
-  // method
+  /* method */
   describe(this: Department) {
     console.log(`Department (${this.id}): ${this.name}`);
   }
@@ -20,12 +22,53 @@ class Department {
   }
 }
 
-const accounting = new Department("d1", "Accounting");
+// extends: 상속 키워드
+class ITDepartment extends Department {
+  constructor(id: string, public admins: string[]) {
+    // 상속받은 클래스의 속성값 외에 특정 속성을 추가하기 위해서는
+    // super를 호출해야한다.
+    super(id, "IT");
+  }
 
-accounting.addEmployee("Max");
+  printAdmins() {
+    console.log(this.admins);
+  }
+}
+
+class AccountingDepartment extends Department {
+  constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+  }
+
+  // 기존 메소드 재정의
+  addEmployee(name: string) {
+    if (name === "Max") {
+      return;
+    }
+    this.employees.push(name);
+  }
+
+  addReport(text: string) {
+    this.reports.push(text);
+  }
+
+  printReports() {
+    console.log(this.reports);
+  }
+}
+
+const accounting = new AccountingDepartment("d1", ["Report1", "Report2"]);
+const accountingIT = new ITDepartment("d2", ["Max"]);
+
+accounting.addEmployee("Max"); // 추가되지 않음
 accounting.addEmployee("Manu");
 
 // accounting.employees[2] = "Anna"; // Error: 'employees' property is private
 
 accounting.describe();
 accounting.printEmployeeInformation();
+accounting.addReport("Additional Report");
+accounting.printReports();
+
+accountingIT.describe();
+accountingIT.printAdmins();
