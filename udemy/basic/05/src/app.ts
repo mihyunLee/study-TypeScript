@@ -1,4 +1,4 @@
-class Department {
+abstract class Department {
   /* class field */
   // protected: private와 비슷하지만 이 클래스 뿐만 아니라
   // 확장하는 모든 클래스에서도 사용 가능한 속성으로 만들어준다.
@@ -48,6 +48,7 @@ class ITDepartment extends Department {
 
 class AccountingDepartment extends Department {
   private lastReport: string;
+  private static instance: AccountingDepartment;
 
   // getter
   get mostRecentReport() {
@@ -66,9 +67,19 @@ class AccountingDepartment extends Department {
     this.addReport(value);
   }
 
-  constructor(id: string, private reports: string[]) {
+  // private 생성자로 만들면 new 클래스 구문 사용 불가
+  private constructor(id: string, private reports: string[]) {
     super(id, "Accounting");
     this.lastReport = reports[0];
+  }
+
+  // 단 하나의 인스턴스만 생성하도록 하는 정적 메서드 선언
+  // 싱글톤 패턴을 구현할 수 있다.
+  static getInstance() {
+    if (!AccountingDepartment.instance) {
+      this.instance = new AccountingDepartment("d1", ["Report1", "Report2"]);
+    }
+    return this.instance;
   }
 
   // 기존 메소드 재정의
@@ -92,8 +103,12 @@ class AccountingDepartment extends Department {
 const employee1 = Department.createEmployee("Max");
 console.log(employee1, Department.createYear);
 
-const accounting = new AccountingDepartment("d1", ["Report1", "Report2"]);
-const accountingIT = new ITDepartment("d2", ["Max"]);
+// new 클래스 구문 사용 불가
+// const accounting = new AccountingDepartment("d1", ["Report1", "Report2"]);
+const accounting = AccountingDepartment.getInstance();
+const accounting2 = AccountingDepartment.getInstance();
+
+console.log(accounting === accounting2); // true, 동일한 단 하나의 인스턴스만 생성됨(싱글톤 패턴)
 
 accounting.addEmployee("Max"); // 추가되지 않음
 accounting.addEmployee("Manu");
@@ -108,6 +123,8 @@ console.log(accounting.mostRecentReport);
 
 accounting.printReports();
 accounting.printEmployeeInformation();
+
+const accountingIT = new ITDepartment("d2", ["Max"]);
 
 accountingIT.describe();
 accountingIT.printAdmins();
