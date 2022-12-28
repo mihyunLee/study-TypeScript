@@ -1,15 +1,13 @@
 class Department {
   // Class Field
-  name: string;
   private employees: string[] = []; // private: 객체 밖에서 필드에 접근할 수 없다.
 
-  constructor(n: string) {
-    this.name = n;
-  }
+  // 클래스 필드를 축약해서 생성할 수 있다.
+  constructor(private readonly id: string, public name: string) {}
 
   // method
   describe(this: Department) {
-    console.log("Department: " + this.name);
+    console.log(`Department (${this.id}): ${this.name}`);
   }
 
   addEmployee(employee: string) {
@@ -22,7 +20,7 @@ class Department {
   }
 }
 
-const accounting = new Department("Accounting");
+const accounting = new Department("d1", "Accounting");
 
 accounting.addEmployee("Max");
 accounting.addEmployee("Manu");
