@@ -4,12 +4,23 @@ class Department {
   // 확장하는 모든 클래스에서도 사용 가능한 속성으로 만들어준다.
   protected employees: string[] = [];
 
+  static createYear = 2022; // 정적 속성
+
   // 클래스 필드를 축약해서 생성할 수 있다.
   constructor(private readonly id: string, public name: string) {}
 
+  // 정적 메서드
+  static createEmployee(name: string) {
+    return { name: name };
+  }
+
   /* method */
   describe(this: Department) {
-    console.log(`Department (${this.id}): ${this.name}`);
+    // 클래스 내부에서 정적 속성이나 메서드에 접근하려면
+    // this 키워드가 아닌 해당하는 클래스 명을 사용해야 한다.
+    console.log(
+      `Department (${this.id}): ${Department.createYear} ${this.name}`
+    );
   }
 
   addEmployee(employee: string) {
@@ -77,6 +88,9 @@ class AccountingDepartment extends Department {
     console.log(this.reports);
   }
 }
+
+const employee1 = Department.createEmployee("Max");
+console.log(employee1, Department.createYear);
 
 const accounting = new AccountingDepartment("d1", ["Report1", "Report2"]);
 const accountingIT = new ITDepartment("d2", ["Max"]);
