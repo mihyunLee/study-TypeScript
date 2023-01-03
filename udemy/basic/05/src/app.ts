@@ -1,7 +1,10 @@
 // (1) 인터페이스는 초기자를 가질 수 없다.
 // 객체의 구조를 정의한다.
 interface Greetable {
-  name: string;
+  // readonly 제어자를 통해 객체가 초기화 된 후
+  // 필드 값을 변경할 수 없도록 할 수 있다.
+  // public, private는 설정할 수 X.
+  readonly name: string;
 
   greet(phrase: string): void;
 }
@@ -43,8 +46,13 @@ user1 = {
 user1.greet("hi there - I am "); // hi there - I am Max
 user1.sayHi(); // Hi, Max
 
+// user1.name = "Something"; // ERROR! name is read-only property
+
 // 클래스로 인스턴스 생성
-let user2 = new Person("Anna", 30);
+// 인터페이스가 구현된 클래스에 read-only가 적용되려면
+// 클래스에 인터페이스 타입을 지정해주어야 한다.
+let user2: Greetable = new Person("Anna", 30);
+// user2.name = "Max"; // ERROR! name is read-only property
 
 user2.greet("hi there - I am "); // hi there - I am Anna
 user2.sayHi(); // Hi, Anna
