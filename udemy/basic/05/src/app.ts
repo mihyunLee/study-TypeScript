@@ -1,11 +1,13 @@
+interface Named {
+  readonly name: string;
+}
+
 // (1) 인터페이스는 초기자를 가질 수 없다.
 // 객체의 구조를 정의한다.
-interface Greetable {
-  // readonly 제어자를 통해 객체가 초기화 된 후
-  // 필드 값을 변경할 수 없도록 할 수 있다.
-  // public, private는 설정할 수 X.
-  readonly name: string;
-
+// (4) 인터페이스 확장: extend
+// 인터페이스를 분리하면서 공통으로 사용되는 부분과,
+// 그렇지 않은 부분을 따로 관리할 수 있다.
+interface Greetable extends Named {
   greet(phrase: string): void;
 }
 
