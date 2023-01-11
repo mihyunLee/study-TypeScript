@@ -1,4 +1,8 @@
 {
+  /* json 파일을 확장하여 사용할 수 있다. 
+    TypeScript 2.1 이상 환경에서 사용 가능
+  */
+  "extends": "./base.json",
   /* 파일 저장시 컴파일된다.
    기본 옵션: false
    TypeScript 1.8.4 이상, atom-typescript 플러그인이 설치되어 있을 때 동작한다.
@@ -81,7 +85,7 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
 
     /* Type Checking */
-    "strict": true /* Enable all strict type-checking options. */,
+    // "strict": true /* Enable all strict type-checking options. */,
     // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     // "strictNullChecks": true,                         /* When type checking, take into account 'null' and 'undefined'. */
     // "strictFunctionTypes": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
